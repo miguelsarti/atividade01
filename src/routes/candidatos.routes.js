@@ -4,7 +4,7 @@ const candidatosRoutes = Router();
 
 let candidatos = [
     {
-      id: Math.random() * 1000000,
+      id: Math.floor(Math.random() * 1000000),
       nome: "Capitã Lucimara",
       partido: "PSD",
       idade: 39,
@@ -17,7 +17,7 @@ let candidatos = [
     },
 
     {
-      id: Math.random() * 1000000,
+      id: Math.floor(Math.random() * 1000000),
       nome: "Rodrigo Toloi",
       partido: "MDB",
       idade: 40,
@@ -30,7 +30,7 @@ let candidatos = [
     },
 
     {
-        id: Math.random() * 1000000,
+        id: Math.floor(Math.random() * 1000000),
         nome: "Alexandre Japa",
         partido: "PRD",
         idade: 39,
@@ -39,7 +39,7 @@ let candidatos = [
         "",
         "",
         "",    
-        ],
+      ],
     },
 ];
 // Rota para buscar todas as emoções]
@@ -52,9 +52,30 @@ candidatosRoutes.get("/", (req, res) => {
 // Rota para criar uma nova emoção
 
 candidatosRoutes.post("/", (req, res) => {
-    const {nome, partido, idade, segundo, propostas} = req.body;
+    const { 
+      nome,
+      partido,
+      idade,
+      segundo,
+      propostas
+    } = req.body;
+
+  // Validação dos campos nome e partido
+  if (!nome || !partido) {
+    return res.status(400).send({
+      message: "O nome ou o partido não foi preenchido!",
+    });
+  }
+
+  // Validação de idade
+  if(idade < 18) {
+    return res.status(400).send({
+      message: "O candidato não possui uma idade suficiente para participar desse debate",
+    });
+  }
+
     const newCandidato = {
-    id: candidatos.length + 1,
+    id: Math.floor(Math.random() * 1000000),
     nome: nome,
     partido: partido,
     idade: idade,
@@ -63,7 +84,10 @@ candidatosRoutes.post("/", (req, res) => {
     };
 
     candidatos.push(newCandidato);
-    return res.status(201).send(candidatos);
+    return res.status(201).json({
+      message: "Candidato cadastrado com sucesso!",
+      newCandidato,
+    });
 });
 
 // Rota para buscar uma emoção pelo id
