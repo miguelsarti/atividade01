@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Projeto para resolução da atividade proposta pelo instrutor Felipe Dev Aleatório",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "type": "module",
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "nodemon src/server.js"
+},
   "keywords": [
     "SENAI",
     "back-end",
@@ -13,5 +15,10 @@
     "NodeJS"
   ],
   "author": "Miguel Sarti",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "nodemon": "^3.1.7"
+  }
 }
